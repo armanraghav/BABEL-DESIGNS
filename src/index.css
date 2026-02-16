@@ -1,0 +1,298 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Amoret Sans';
+  src: url('/amoretsans-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* BABEL DESIGNS — Muted Luxury Design System */
+
+@layer base {
+  :root {
+    /* Core palette - warm, muted, natural */
+    --background: 40 20% 97%;
+    --foreground: 30 10% 15%;
+
+    --card: 40 15% 95%;
+    --card-foreground: 30 10% 15%;
+
+    --popover: 40 20% 97%;
+    --popover-foreground: 30 10% 15%;
+
+    /* Primary - deep charcoal with warmth */
+    --primary: 30 8% 18%;
+    --primary-foreground: 40 20% 97%;
+
+    /* Secondary - warm stone */
+    --secondary: 35 12% 88%;
+    --secondary-foreground: 30 10% 20%;
+
+    /* Muted - soft linen */
+    --muted: 38 15% 92%;
+    --muted-foreground: 30 8% 45%;
+
+    /* Accent - warm sand/clay */
+    --accent: 32 20% 82%;
+    --accent-foreground: 30 10% 18%;
+
+    --destructive: 0 50% 45%;
+    --destructive-foreground: 40 20% 97%;
+
+    --border: 35 15% 85%;
+    --input: 35 15% 88%;
+    --ring: 30 10% 30%;
+
+    --radius: 0.25rem;
+
+    /* Custom tokens for Babel */
+    --stone: 30 8% 55%;
+    --sand: 38 25% 78%;
+    --clay: 25 22% 65%;
+    --wood: 28 30% 35%;
+    --linen: 42 30% 94%;
+    --charcoal: 30 10% 18%;
+
+    /* Typography */
+    --font-serif: 'Crimson Text', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    /* Spacing rhythm */
+    --section-padding: 8rem;
+    --section-padding-mobile: 4rem;
+
+    /* Sidebar (keeping defaults) */
+    --sidebar-background: 40 15% 96%;
+    --sidebar-foreground: 30 10% 25%;
+    --sidebar-primary: 30 8% 18%;
+    --sidebar-primary-foreground: 40 20% 97%;
+    --sidebar-accent: 38 15% 90%;
+    --sidebar-accent-foreground: 30 10% 18%;
+    --sidebar-border: 35 15% 85%;
+    --sidebar-ring: 30 10% 30%;
+  }
+
+  .dark {
+    --background: 30 10% 8%;
+    --foreground: 40 15% 92%;
+
+    --card: 30 10% 12%;
+    --card-foreground: 40 15% 92%;
+
+    --popover: 30 10% 10%;
+    --popover-foreground: 40 15% 92%;
+
+    --primary: 40 15% 92%;
+    --primary-foreground: 30 10% 10%;
+
+    --secondary: 30 8% 18%;
+    --secondary-foreground: 40 15% 92%;
+
+    --muted: 30 8% 15%;
+    --muted-foreground: 35 10% 60%;
+
+    --accent: 30 12% 22%;
+    --accent-foreground: 40 15% 92%;
+
+    --destructive: 0 50% 40%;
+    --destructive-foreground: 40 20% 97%;
+
+    --border: 30 8% 20%;
+    --input: 30 8% 20%;
+    --ring: 40 15% 70%;
+
+    --sidebar-background: 30 10% 10%;
+    --sidebar-foreground: 40 15% 90%;
+    --sidebar-primary: 40 15% 90%;
+    --sidebar-primary-foreground: 30 10% 10%;
+    --sidebar-accent: 30 8% 18%;
+    --sidebar-accent-foreground: 40 15% 90%;
+    --sidebar-border: 30 8% 18%;
+    --sidebar-ring: 40 15% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  /* Headlines - Canela serif with high contrast */
+  .headline-primary {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-normal tracking-tight leading-tight;
+  }
+
+  .headline-secondary {
+    @apply font-serif text-2xl md:text-3xl lg:text-4xl font-normal tracking-tight leading-tight;
+  }
+
+  /* Sub-headlines - Same serif, smaller */
+  .subheading {
+    @apply font-serif text-xl md:text-2xl font-normal tracking-wide leading-snug;
+  }
+
+  /* Body text - Neutral sans-serif */
+  .body-text {
+    @apply font-sans text-base md:text-lg font-normal leading-relaxed tracking-wide;
+  }
+
+  /* Navigation - Sans-serif, spaced */
+  .nav-text {
+    @apply font-sans text-sm uppercase tracking-widest font-medium;
+  }
+
+  /* Labels / Numbers - Sans-serif, light */
+  .label-text {
+    @apply font-sans text-xs uppercase tracking-widest font-light;
+  }
+
+  .editorial-heading {
+    @apply font-serif font-light tracking-tight leading-tight;
+  }
+
+  .editorial-body {
+    @apply font-sans font-light leading-relaxed tracking-wide;
+  }
+
+  .logo-title {
+    font-family: 'Amoret Sans', 'Crimson Text', Georgia, serif;
+  }
+
+  .section-padding {
+    @apply py-20 md:py-32 px-6 md:px-12 lg:px-20;
+  }
+
+  .container-editorial {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .display-title {
+    @apply font-serif font-light tracking-tight leading-[1.04] text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  .section-overline {
+    @apply font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground;
+  }
+
+  .section-title {
+    @apply font-serif text-3xl md:text-4xl font-light text-foreground leading-tight;
+  }
+
+  .section-copy {
+    @apply font-sans text-muted-foreground leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    overflow-wrap: anywhere;
+  }
+
+  .section-transition {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .card-hover-lift {
+    @apply transition-all duration-500;
+  }
+
+  .card-hover-lift:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 42px -28px hsl(var(--foreground) / 0.45);
+  }
+
+  .lookbook-snap {
+    scroll-snap-type: x mandatory;
+  }
+
+  .lookbook-item {
+    scroll-snap-align: center;
+  }
+}
+
+.site-grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.035;
+  background-image:
+    radial-gradient(circle at 24% 18%, hsl(var(--foreground) / 0.15) 0.6px, transparent 0.8px),
+    radial-gradient(circle at 75% 78%, hsl(var(--foreground) / 0.12) 0.6px, transparent 0.8px);
+  background-size: 3px 3px, 4px 4px;
+}
+
+.custom-cursor-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  margin-top: -3.5px;
+  border-radius: 9999px;
+  background: hsl(var(--foreground));
+}
+
+.custom-cursor-ring {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--foreground) / 0.45);
+  background: hsl(var(--background) / 0.2);
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  transform-origin: center;
+  transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease;
+}
+
+.custom-cursor-ring[data-state="active"] {
+  transform: scale(1.35);
+  border-color: hsl(var(--foreground) / 0.7);
+  background: hsl(var(--background) / 0.55);
+}
+
+.custom-cursor-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: hsl(var(--foreground) / 0.8);
+  white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  body,
+  a,
+  button {
+    cursor: none;
+  }
+}
