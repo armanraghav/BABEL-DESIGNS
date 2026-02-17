@@ -1,8 +1,43 @@
 ﻿import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
+import { toast } from 'sonner';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
+import { createStudioDispatchSubscription } from '@/integrations/supabase/studio_dispatch';
 
 const Footer = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    const trimmed = email.trim();
+    const isValidEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(trimmed);
+    if (!trimmed || !isValidEmail) {
+      toast.error('Enter a valid email address.');
+      return;
+    }
+
+    if (!isSupabaseConfigured) {
+      toast.error('Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await createStudioDispatchSubscription({ email: trimmed });
+      toast.success('Subscribed. Welcome to Studio Dispatch.');
+      setEmail('');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to subscribe';
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <footer className="relative overflow-hidden border-t border-border bg-card">
       <div className="pointer-events-none absolute inset-0 opacity-40">
@@ -25,7 +60,7 @@ const Footer = () => {
               New collection studies, material insights, and project stories. Quietly delivered.
             </p>
           </div>
-          <form className="flex flex-col justify-center gap-4 sm:flex-row sm:items-end">
+          <form className="flex flex-col justify-center gap-4 sm:flex-row sm:items-end" onSubmit={handleSubscribe}>
             <label htmlFor="footer-email" className="sr-only">
               Email address
             </label>
@@ -33,14 +68,19 @@ const Footer = () => {
               id="footer-email"
               type="email"
               placeholder="your@email.com"
+              autoComplete="email"
+              inputMode="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
               className="h-12 flex-1 border border-border bg-background px-4 font-sans text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-foreground"
             />
             <button
-              type="button"
+              type="submit"
               data-cursor="Join"
-              className="h-12 border border-foreground/30 px-6 font-sans text-xs uppercase tracking-[0.25em] text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background"
+              disabled={isSubmitting}
+              className="h-12 border border-foreground/30 px-6 font-sans text-xs uppercase tracking-[0.25em] text-foreground transition-colors hover:border-foreground hover:bg-foreground hover:text-background disabled:opacity-60"
             >
-              Subscribe
+              {isSubmitting ? 'Subscribing…' : 'Subscribe'}
             </button>
           </form>
         </motion.div>
