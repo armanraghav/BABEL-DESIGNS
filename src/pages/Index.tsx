@@ -98,8 +98,8 @@ const Index = () => {
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 0.9 }}
+              whileTap={{ scale: 0.78 }}
             >
               <Link
                 to="/collections"
