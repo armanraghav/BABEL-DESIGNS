@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { fadeInUpVariants, fadeInDownVariants, fadeInLeftVariants, fadeInRightVariants, scaleInVariants, blurVariants, easing } from '@/lib/animations';
 
 interface AnimatedSectionProps {
@@ -17,6 +17,40 @@ const AnimatedSection = ({
   direction = 'up',
   variant = 'default'
 }: AnimatedSectionProps) => {
+  const [skipReveal, setSkipReveal] = useState(false);
+  const lastScrollY = useRef(0);
+  const lastTimestamp = useRef(0);
+  const resetTimer = useRef<number | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const now = performance.now();
+      const currentY = window.scrollY;
+      const deltaY = Math.abs(currentY - lastScrollY.current);
+      const deltaTime = Math.max(now - lastTimestamp.current, 16);
+      const speed = deltaY / deltaTime;
+
+      // If scroll speed is high, skip reveal animations to prevent delayed text pop-in.
+      if (speed > 1.4) {
+        setSkipReveal(true);
+        if (resetTimer.current) window.clearTimeout(resetTimer.current);
+        resetTimer.current = window.setTimeout(() => setSkipReveal(false), 200);
+      }
+
+      lastScrollY.current = currentY;
+      lastTimestamp.current = now;
+    };
+
+    lastScrollY.current = window.scrollY;
+    lastTimestamp.current = performance.now();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (resetTimer.current) window.clearTimeout(resetTimer.current);
+    };
+  }, []);
+
   // Select the appropriate variants based on direction and variant
   const selectVariants = () => {
     if (variant === 'fade') return fadeInUpVariants;
@@ -41,10 +75,11 @@ const AnimatedSection = ({
   return (
     <motion.div
       variants={variants}
-      initial="hidden"
-      whileInView="visible"
+      initial={skipReveal ? false : 'hidden'}
+      whileInView={skipReveal ? undefined : 'visible'}
+      animate={skipReveal ? 'visible' : undefined}
       viewport={{ once: true, margin: '-150px' }}
-      transition={{ delay, ease: easing.smooth }}
+      transition={skipReveal ? { duration: 0 } : { delay, ease: easing.smooth }}
       className={className}
     >
       {children}

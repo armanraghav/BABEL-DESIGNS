@@ -81,7 +81,7 @@ const Index = () => {
 
           <motion.h1
             variants={heroHeadingVariants}
-            className="logo-title text-5xl md:text-7xl lg:text-7xl font-light tracking-wide text-primary-foreground mb-8"
+            className="logo-title text-3xl sm:text-5xl md:text-7xl lg:text-7xl font-light tracking-wide whitespace-nowrap text-primary-foreground mb-8"
           >
             BABEL DESIGNS
           </motion.h1>

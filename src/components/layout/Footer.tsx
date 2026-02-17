@@ -14,7 +14,7 @@ const Footer = () => {
     event.preventDefault();
 
     const trimmed = email.trim();
-    const isValidEmail = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(trimmed);
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed);
     if (!trimmed || !isValidEmail) {
       toast.error('Enter a valid email address.');
       return;
