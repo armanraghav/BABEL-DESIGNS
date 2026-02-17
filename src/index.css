@@ -1,8 +1,3 @@
-
-
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
-
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -39,7 +34,7 @@
 
     /* Muted - soft linen */
     --muted: 38 15% 92%;
-    --muted-foreground: 30 8% 45%;
+    --muted-foreground: 30 8% 38%;
 
     /* Accent - warm sand/clay */
     --accent: 32 20% 82%;
@@ -98,7 +93,7 @@
     --secondary-foreground: 40 15% 92%;
 
     --muted: 30 8% 15%;
-    --muted-foreground: 35 10% 60%;
+    --muted-foreground: 35 10% 68%;
 
     --accent: 30 12% 22%;
     --accent-foreground: 40 15% 92%;
@@ -138,6 +133,11 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-serif;
   }
+
+  :where(a, button, input, textarea, select, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
@@ -157,7 +157,7 @@
 
   /* Body text - Neutral sans-serif */
   .body-text {
-    @apply font-sans text-base md:text-lg font-normal leading-relaxed tracking-wide;
+    @apply font-sans text-base md:text-lg font-normal leading-relaxed tracking-[0.01em];
   }
 
   /* Navigation - Sans-serif, spaced */
@@ -266,8 +266,7 @@
   margin-top: -22px;
   border-radius: 9999px;
   border: 1px solid hsl(var(--foreground) / 0.45);
-  background: hsl(var(--background) / 0.2);
-  backdrop-filter: blur(2px);
+  background: hsl(var(--background) / 0.75);
   display: grid;
   place-items: center;
   transform-origin: center;
@@ -289,7 +288,21 @@
   white-space: nowrap;
 }
 
-@media (min-width: 1024px) {
+@supports ((-webkit-backdrop-filter: blur(2px)) or (backdrop-filter: blur(2px))) {
+  .custom-cursor-ring {
+    background: hsl(var(--background) / 0.2);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   body,
   a,
   button {

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import AnimatedSection from '@/components/AnimatedSection';
 import { 
   staggerContainerVariants, 
@@ -14,17 +15,17 @@ import heroBg from '@/assets/homepagebg.jpeg';
 import monolithImg from '@/assets/monolith-collection.jpg';
 import stillnessImg from '@/assets/stillness-collection.jpg';
 import originImg from '@/assets/origin-collection.jpg';
+import { fetchCollections } from '@/integrations/supabase/catalog';
 
 const Index = () => {
   const { scrollY } = useScroll();
   const heroOffset = useTransform(scrollY, [0, 600], [0, 90]);
-  const collectionImages: Record<string, string> = {
-    monolith: monolithImg,
-    stillness: stillnessImg,
-    origin: originImg,
-  };
+  const { data: collections = [] } = useQuery({
+    queryKey: ['collections'],
+    queryFn: fetchCollections,
+  });
 
-  const collections = [
+  const fallbackCollections = [
     {
       slug: 'monolith',
       name: 'The Monolith Collection',
@@ -41,6 +42,8 @@ const Index = () => {
       tagline: 'Return to essence',
     },
   ];
+
+  const previewCollections = collections.length > 0 ? collections : fallbackCollections;
 
   return (
     <div className="min-h-screen">
@@ -152,7 +155,7 @@ const Index = () => {
             viewport={{ once: true, margin: '-100px' }}
             className="grid grid-cols-1 md:grid-cols-3 gap-12"
           >
-            {collections.map((collection) => (
+            {previewCollections.map((collection) => (
               <motion.div
                 key={collection.slug}
                 variants={staggerItemVariants}
@@ -168,7 +171,7 @@ const Index = () => {
                     transition={{ duration: 0.5 }}
                   >
                     <img
-                      src={collectionImages[collection.slug]}
+                      src={collection.image}
                       alt={collection.name}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />

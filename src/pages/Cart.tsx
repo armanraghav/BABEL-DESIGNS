@@ -1,13 +1,19 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Minus, Plus, X, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import AnimatedSection from '@/components/AnimatedSection';
-import { staggerContainerVariants, staggerItemVariants, buttonHoverVariants } from '@/lib/animations';
+import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
 import { toast } from 'sonner';
+import { createOrder } from '@/integrations/supabase/orders';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
+import { createRazorpayOrder, verifyRazorpayPayment } from '@/integrations/supabase/payments';
+import { openRazorpayCheckout } from '@/integrations/razorpay/checkout';
 
 const Cart = () => {
   const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -17,8 +23,61 @@ const Cart = () => {
     }).format(price);
   };
 
-  const handleCheckout = () => {
-    toast.success('Thank you for your interest. Checkout functionality coming soon.');
+  const handleCheckout = async () => {
+    if (!isSupabaseConfigured) {
+      toast.error('Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      return;
+    }
+    if (!import.meta.env.VITE_RAZORPAY_KEY_ID) {
+      toast.error('Razorpay is not configured yet. Add VITE_RAZORPAY_KEY_ID.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const localOrder = await createOrder({ items, currency: 'INR' });
+      const razorpayOrder = await createRazorpayOrder({ localOrderId: localOrder.id });
+
+      await new Promise<void>((resolve, reject) => {
+        openRazorpayCheckout({
+          key: import.meta.env.VITE_RAZORPAY_KEY_ID!,
+          amount: razorpayOrder.amount,
+          currency: razorpayOrder.currency,
+          name: 'Babel Designs',
+          description: 'Furniture order payment',
+          order_id: razorpayOrder.razorpayOrderId,
+          notes: {
+            local_order_id: localOrder.id,
+          },
+          theme: {
+            color: '#2f2922',
+          },
+          handler: async (response) => {
+            try {
+              await verifyRazorpayPayment({
+                localOrderId: localOrder.id,
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              });
+              clearCart();
+              toast.success(`Payment successful. Reference: ${localOrder.id.slice(0, 8).toUpperCase()}`);
+              resolve();
+            } catch (error) {
+              reject(error);
+            }
+          },
+          modal: {
+            ondismiss: () => reject(new Error('Payment cancelled')),
+          },
+        }).catch(reject);
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to submit order request';
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (items.length === 0) {
@@ -188,11 +247,12 @@ const Cart = () => {
 
               <motion.button
                 onClick={handleCheckout}
+                disabled={isSubmitting}
                 className="w-full font-sans text-sm tracking-widest uppercase bg-foreground text-background py-4 hover:bg-foreground/90 transition-colors mb-4"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Proceed to Checkout
+                {isSubmitting ? 'Submitting...' : 'Proceed to Checkout'}
               </motion.button>
 
               <p className="font-sans text-xs text-muted-foreground text-center">

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 interface PageTransitionProps {
   pathname: string;
@@ -39,15 +39,20 @@ const transitionByRoute = (pathname: string) => {
 };
 
 const PageTransition = ({ pathname, children }: PageTransitionProps) => {
+  const prefersReducedMotion = useReducedMotion();
   const routeMotion = transitionByRoute(pathname);
 
   return (
     <motion.div
       key={pathname}
-      initial={routeMotion.initial}
-      animate={routeMotion.animate}
-      exit={routeMotion.exit}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      initial={prefersReducedMotion ? false : routeMotion.initial}
+      animate={prefersReducedMotion ? { opacity: 1 } : routeMotion.animate}
+      exit={prefersReducedMotion ? { opacity: 1 } : routeMotion.exit}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0 }
+          : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+      }
     >
       {children}
     </motion.div>

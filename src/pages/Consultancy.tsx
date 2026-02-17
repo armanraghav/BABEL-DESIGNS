@@ -4,8 +4,11 @@ import { Check } from 'lucide-react';
 import AnimatedSection from '@/components/AnimatedSection';
 import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations';
 import { toast } from 'sonner';
+import { createConsultancyRequest } from '@/integrations/supabase/consultancy';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
 
 const Consultancy = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,17 +18,31 @@ const Consultancy = () => {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Thank you for your inquiry. We will be in touch within 48 hours.');
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      projectType: '',
-      timeline: '',
-      message: '',
-    });
+    if (!isSupabaseConfigured) {
+      toast.error('Supabase is not configured yet. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await createConsultancyRequest(formData);
+      toast.success('Thank you for your inquiry. We will be in touch within 48 hours.');
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        projectType: '',
+        timeline: '',
+        message: '',
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Failed to submit inquiry';
+      toast.error(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -322,12 +339,13 @@ const Consultancy = () => {
 
                 <motion.button
                   type="submit"
+                  disabled={isSubmitting}
                   data-cursor="Submit"
                   className="w-full font-sans text-sm tracking-widest uppercase bg-foreground text-background py-4 hover:bg-foreground/90 transition-colors"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Begin Your Design Journey
+                  {isSubmitting ? 'Submitting...' : 'Begin Your Design Journey'}
                 </motion.button>
             </motion.form>
           </div>

@@ -26,6 +26,7 @@ const Navbar = () => {
     if (!navRef.current) return;
 
     const timeline = gsap.timeline();
+    const isDesktop = window.matchMedia('(min-width: 768px)').matches;
 
     // Navbar slides down and fades in
     timeline.from(navRef.current, {
@@ -66,7 +67,7 @@ const Navbar = () => {
     }
 
     // Cart icon animates in
-    if (cartRef.current) {
+    if (cartRef.current && isDesktop) {
       timeline.from(
         cartRef.current,
         {
@@ -78,6 +79,12 @@ const Navbar = () => {
         '-=0.5'
       );
     }
+
+    timeline.eventCallback('onComplete', () => {
+      if (cartRef.current) {
+        gsap.set(cartRef.current, { clearProps: 'opacity,transform' });
+      }
+    });
   }, []);
 
   // Animate badge when totalItems changes
