@@ -12,55 +12,55 @@ export const fadeInVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.9,
+      duration: 0.7,
       ease: easing.smooth,
     },
   },
 };
 
 export const fadeInUpVariants: Variants = {
-  hidden: { opacity: 0, y: 48 },
+  hidden: { opacity: 0, y: 28 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.05,
+      duration: 0.8,
       ease: easing.smooth,
     },
   },
 };
 
 export const fadeInDownVariants: Variants = {
-  hidden: { opacity: 0, y: -48 },
+  hidden: { opacity: 0, y: -28 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.05,
+      duration: 0.8,
       ease: easing.smooth,
     },
   },
 };
 
 export const fadeInLeftVariants: Variants = {
-  hidden: { opacity: 0, x: -40 },
+  hidden: { opacity: 0, x: -28 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.95,
+      duration: 0.75,
       ease: easing.smooth,
     },
   },
 };
 
 export const fadeInRightVariants: Variants = {
-  hidden: { opacity: 0, x: 40 },
+  hidden: { opacity: 0, x: 28 },
   visible: {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.95,
+      duration: 0.75,
       ease: easing.smooth,
     },
   },
@@ -73,7 +73,7 @@ export const scaleInVariants: Variants = {
     opacity: 1,
     scale: 1,
     transition: {
-      duration: 0.9,
+      duration: 0.7,
       ease: easing.smooth,
     },
   },
@@ -92,12 +92,12 @@ export const staggerContainerVariants: Variants = {
 };
 
 export const staggerItemVariants: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 16 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.95,
+      duration: 0.7,
       ease: easing.smooth,
     },
   },
@@ -128,12 +128,12 @@ export const hoverLiftVariants: Variants = {
 
 // Image animations
 export const imageZoomInVariants: Variants = {
-  hidden: { scale: 1.06, opacity: 0 },
+  hidden: { scale: 1.03, opacity: 0 },
   visible: {
     scale: 1,
     opacity: 1,
     transition: {
-      duration: 1.25,
+      duration: 0.9,
       ease: easing.smooth,
     },
   },
@@ -144,7 +144,7 @@ export const parallaxImageVariants = (offset = 28): Variants => ({
   visible: {
     y: 0,
     transition: {
-      duration: 1.4,
+      duration: 1.0,
       ease: easing.smooth,
     },
   },
@@ -184,7 +184,7 @@ export const slideInLeftVariants: Variants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 1.05,
+      duration: 0.85,
       ease: easing.smooth,
     },
   },
@@ -196,7 +196,7 @@ export const slideInRightVariants: Variants = {
     x: 0,
     opacity: 1,
     transition: {
-      duration: 1.05,
+      duration: 0.85,
       ease: easing.smooth,
     },
   },
@@ -208,7 +208,7 @@ export const slideInUpVariants: Variants = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1.05,
+      duration: 0.85,
       ease: easing.smooth,
     },
   },
@@ -221,7 +221,7 @@ export const rotateInVariants: Variants = {
     opacity: 1,
     rotate: 0,
     transition: {
-      duration: 0.9,
+      duration: 0.7,
       ease: easing.smooth,
     },
   },
@@ -229,12 +229,12 @@ export const rotateInVariants: Variants = {
 
 // Blur animations
 export const blurVariants: Variants = {
-  hidden: { filter: 'blur(8px)', opacity: 0 },
+  hidden: { filter: 'blur(4px)', opacity: 0 },
   visible: {
     filter: 'blur(0px)',
     opacity: 1,
     transition: {
-      duration: 0.95,
+      duration: 0.75,
       ease: easing.smooth,
     },
   },
@@ -242,25 +242,25 @@ export const blurVariants: Variants = {
 
 // Custom combined animations
 export const heroHeadingVariants: Variants = {
-  hidden: { opacity: 0, y: 56 },
+  hidden: { opacity: 0, y: 36 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.2,
+      duration: 0.9,
       ease: easing.smooth,
     },
   },
 };
 
 export const heroSubheadingVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.0,
-      delay: 0.35,
+      duration: 0.75,
+      delay: 0.2,
       ease: easing.smooth,
     },
   },
@@ -272,8 +272,8 @@ export const heroCTAVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 1.0,
-      delay: 0.6,
+      duration: 0.7,
+      delay: 0.35,
       ease: easing.smooth,
     },
   },
@@ -285,14 +285,14 @@ export const pageEnterVariants: Variants = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.95,
+      duration: 0.7,
       ease: easing.smooth,
     },
   },
   exit: {
     opacity: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.45,
       ease: easing.smooth,
     },
   },

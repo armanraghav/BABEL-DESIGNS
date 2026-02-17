@@ -184,6 +184,23 @@ export interface Database {
           created_at?: string;
         };
       };
+      studio_dispatch_subscribers: {
+        Row: {
+          id: string;
+          email: string;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          email: string;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          email?: string;
+          created_at?: string;
+        };
+      };
     };
     Views: never;
     Functions: never;

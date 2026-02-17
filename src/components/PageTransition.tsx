@@ -9,32 +9,32 @@ interface PageTransitionProps {
 const transitionByRoute = (pathname: string) => {
   if (pathname === '/') {
     return {
-      initial: { opacity: 0, y: 20, scale: 0.995 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: -8, scale: 0.995 },
+      initial: { opacity: 0, y: 12 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -8 },
     };
   }
 
   if (pathname.includes('collections')) {
     return {
-      initial: { opacity: 0, x: 24 },
+      initial: { opacity: 0, x: 16 },
       animate: { opacity: 1, x: 0 },
-      exit: { opacity: 0, x: -16 },
+      exit: { opacity: 0, x: -12 },
     };
   }
 
   if (pathname.includes('philosophy')) {
     return {
-      initial: { opacity: 0, y: 30 },
+      initial: { opacity: 0, y: 16 },
       animate: { opacity: 1, y: 0 },
-      exit: { opacity: 0, y: -20 },
+      exit: { opacity: 0, y: -12 },
     };
   }
 
   return {
-    initial: { opacity: 0, y: 18 },
+    initial: { opacity: 0, y: 14 },
     animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -12 },
+    exit: { opacity: 0, y: -10 },
   };
 };
 
@@ -48,10 +48,11 @@ const PageTransition = ({ pathname, children }: PageTransitionProps) => {
       initial={prefersReducedMotion ? false : routeMotion.initial}
       animate={prefersReducedMotion ? { opacity: 1 } : routeMotion.animate}
       exit={prefersReducedMotion ? { opacity: 1 } : routeMotion.exit}
+      style={prefersReducedMotion ? undefined : { willChange: 'transform, opacity' }}
       transition={
         prefersReducedMotion
           ? { duration: 0 }
-          : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+          : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
       }
     >
       {children}

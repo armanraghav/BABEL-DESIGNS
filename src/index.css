@@ -218,7 +218,11 @@
   }
 
   .card-hover-lift {
-    @apply transition-all duration-500;
+    transition-property: transform, box-shadow, opacity;
+    transition-duration: 500ms;
+    transition-timing-function: cubic-bezier(0.22, 0.12, 0.2, 1);
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .card-hover-lift:hover {
