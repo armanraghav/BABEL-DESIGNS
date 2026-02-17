@@ -164,12 +164,12 @@ const Navbar = () => {
           <Link
             ref={logoRef}
             to="/"
-            className="group -ml-4 md:-ml-8 lg:-ml-12"
+            className="group ml-0 sm:-ml-2 md:-ml-8 lg:-ml-12 flex-1 min-w-0"
             onMouseEnter={handleLogoHover}
             onMouseLeave={handleLogoHoverEnd}
             data-cursor="Home"
           >
-            <h1 className="logo-title text-xl md:text-2xl font-light tracking-widest text-foreground">
+            <h1 className="logo-title text-lg sm:text-xl md:text-2xl font-light tracking-[0.22em] sm:tracking-widest text-foreground leading-tight">
               BABEL DESIGNS
             </h1>
           </Link>

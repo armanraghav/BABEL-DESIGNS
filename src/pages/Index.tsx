@@ -167,13 +167,11 @@ const Index = () => {
                 >
                   <motion.div 
                     className="aspect-[4/5] overflow-hidden mb-6 relative"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.5 }}
                   >
                     <img
                       src={collection.image}
                       alt={collection.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                   </motion.div>
@@ -233,7 +231,7 @@ const Index = () => {
                   <img
                     src={item.img}
                     alt={item.title}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="h-full w-full object-cover"
                   />
                 </div>
                 <div className="mt-4 flex items-center justify-between">

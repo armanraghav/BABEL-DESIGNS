@@ -72,8 +72,6 @@ const ProductDetail = () => {
             >
               <motion.div
                 className="aspect-square bg-secondary/30 mb-4 overflow-hidden"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.5 }}
               >
                 <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
               </motion.div>
@@ -83,7 +81,6 @@ const ProductDetail = () => {
                     key={`${product.id}-${i}`}
                     className="aspect-square bg-secondary/20 overflow-hidden"
                     variants={staggerItemVariants}
-                    whileHover={{ scale: 1.05 }}
                   >
                     <img
                       src={image}

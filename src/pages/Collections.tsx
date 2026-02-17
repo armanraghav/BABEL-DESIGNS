@@ -77,13 +77,11 @@ const Collections = () => {
                   <motion.div className={`${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                     <motion.div
                       className="aspect-[4/3] overflow-hidden relative border border-border/40"
-                      whileHover={{ scale: 1.03 }}
-                      transition={{ duration: 0.5 }}
                     >
                       <img
                         src={collection.image}
                         alt={collection.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     </motion.div>
@@ -136,7 +134,7 @@ const Collections = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-secondary/40 border border-border/60 rounded-2xl overflow-hidden card-hover-lift">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={monolithImg} alt="Stone study" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <img src={monolithImg} alt="Stone study" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <p className="font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">Stone Study</p>
@@ -146,7 +144,7 @@ const Collections = () => {
 
               <div className="bg-secondary/40 border border-border/60 rounded-2xl overflow-hidden card-hover-lift">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={stillnessImg} alt="Soft light" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <img src={stillnessImg} alt="Soft light" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <p className="font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">Soft Light</p>
@@ -156,7 +154,7 @@ const Collections = () => {
 
               <div className="bg-secondary/40 border border-border/60 rounded-2xl overflow-hidden card-hover-lift">
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img src={originImg} alt="Raw materials" className="w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+                  <img src={originImg} alt="Raw materials" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-6">
                   <p className="font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground mb-3">Raw Origin</p>
