@@ -83,6 +83,12 @@ create table if not exists public.studio_dispatch_subscribers (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.user_carts (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  items jsonb not null default '[]'::jsonb,
+  updated_at timestamptz not null default now()
+);
+
 create index if not exists idx_collections_slug on public.collections(slug);
 create index if not exists idx_products_collection_id on public.products(collection_id);
 create index if not exists idx_products_active on public.products(active);
@@ -90,6 +96,7 @@ create index if not exists idx_orders_created_at on public.orders(created_at des
 create index if not exists idx_orders_razorpay_order_id on public.orders(razorpay_order_id);
 create index if not exists idx_consultancy_created_at on public.consultancy_requests(created_at desc);
 create index if not exists idx_studio_dispatch_email on public.studio_dispatch_subscribers(email);
+create index if not exists idx_user_carts_updated_at on public.user_carts(updated_at desc);
 
 alter table public.collections enable row level security;
 alter table public.products enable row level security;
@@ -97,6 +104,7 @@ alter table public.consultancy_requests enable row level security;
 alter table public.orders enable row level security;
 alter table public.order_items enable row level security;
 alter table public.studio_dispatch_subscribers enable row level security;
+alter table public.user_carts enable row level security;
 
 drop policy if exists "Public read collections" on public.collections;
 create policy "Public read collections"
@@ -127,3 +135,19 @@ drop policy if exists "Public insert studio dispatch subscribers" on public.stud
 create policy "Public insert studio dispatch subscribers"
   on public.studio_dispatch_subscribers for insert
   with check (true);
+
+drop policy if exists "Users read own cart" on public.user_carts;
+create policy "Users read own cart"
+  on public.user_carts for select
+  using (auth.uid() = user_id);
+
+drop policy if exists "Users insert own cart" on public.user_carts;
+create policy "Users insert own cart"
+  on public.user_carts for insert
+  with check (auth.uid() = user_id);
+
+drop policy if exists "Users update own cart" on public.user_carts;
+create policy "Users update own cart"
+  on public.user_carts for update
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);

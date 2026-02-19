@@ -219,6 +219,23 @@ export interface Database {
           created_at?: string;
         };
       };
+      user_carts: {
+        Row: {
+          user_id: string;
+          items: Json;
+          updated_at: string;
+        };
+        Insert: {
+          user_id: string;
+          items?: Json;
+          updated_at?: string;
+        };
+        Update: {
+          user_id?: string;
+          items?: Json;
+          updated_at?: string;
+        };
+      };
     };
     Views: never;
     Functions: never;

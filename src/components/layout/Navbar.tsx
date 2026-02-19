@@ -1,8 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import type { User } from '@supabase/supabase-js';
+import { getCurrentUser, onAuthChange } from '@/integrations/supabase/auth';
+import { isSupabaseConfigured } from '@/integrations/supabase/client';
 
 const Navbar = () => {
   const { totalItems } = useCart();
@@ -12,6 +15,7 @@ const Navbar = () => {
   const linksRef = useRef<HTMLDivElement>(null);
   const cartRef = useRef<HTMLAnchorElement>(null);
   const badgeRef = useRef<HTMLSpanElement>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -21,6 +25,26 @@ const Navbar = () => {
     { path: '/philosophy', label: 'Philosophy' },
     { path: '/consultancy', label: 'Consultancy' },
   ];
+
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+
+    let mounted = true;
+    getCurrentUser()
+      .then((nextUser) => {
+        if (mounted) setUser(nextUser);
+      })
+      .catch(() => undefined);
+
+    const subscription = onAuthChange((nextUser) => {
+      if (mounted) setUser(nextUser);
+    });
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   // Initial navbar entrance animation
   useEffect(() => {
@@ -160,17 +184,17 @@ const Navbar = () => {
       className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-sm"
     >
       <div className="container-editorial">
-        <div className="flex items-center justify-between py-6 pl-0 pr-6 md:pr-12 lg:pr-20">
+        <div className="flex items-center justify-between px-4 py-4 sm:px-6 md:py-6 md:pl-0 md:pr-12 lg:pr-20">
           {/* Logo */}
           <Link
             ref={logoRef}
             to="/"
-            className="group ml-0 sm:-ml-2 md:-ml-8 lg:-ml-12 flex-1 min-w-0"
+            className="group ml-0 md:-ml-8 lg:-ml-12 flex-1 min-w-0"
             onMouseEnter={handleLogoHover}
             onMouseLeave={handleLogoHoverEnd}
             data-cursor="Home"
           >
-            <h1 className="logo-title text-lg sm:text-xl md:text-2xl font-light tracking-[0.22em] sm:tracking-widest text-foreground leading-tight">
+            <h1 className="logo-title text-base sm:text-xl md:text-2xl font-light tracking-[0.16em] sm:tracking-widest text-foreground leading-tight">
               BABEL DESIGNS
             </h1>
           </Link>
@@ -193,6 +217,16 @@ const Navbar = () => {
                 {link.label}
               </Link>
             ))}
+
+            <Link
+              to="/auth"
+              className={`font-sans text-sm tracking-widest uppercase ${isActive('/auth') ? 'text-foreground' : 'text-muted-foreground'}`}
+              onMouseEnter={handleNavLinkHover}
+              onMouseLeave={(e) => handleNavLinkHoverEnd(e, isActive('/auth'))}
+              data-cursor="Account"
+            >
+              {user ? 'Account' : 'Sign In'}
+            </Link>
 
             {/* Cart */}
             <Link
@@ -217,7 +251,14 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Nav */}
-          <div className="flex md:hidden items-center gap-6">
+          <div className="flex md:hidden items-center gap-4">
+            <Link
+              to="/auth"
+              className="font-sans text-[10px] uppercase tracking-[0.16em] text-muted-foreground"
+              data-cursor="Account"
+            >
+              {user ? 'Account' : 'Sign In'}
+            </Link>
             <Link
               to="/cart"
               className="relative text-foreground transition-opacity hover:opacity-70"
@@ -237,8 +278,8 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        <div className="md:hidden border-t border-border px-6 py-4">
-          <div className="flex items-center justify-center gap-8">
+        <div className="md:hidden border-t border-border px-4 py-3">
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}

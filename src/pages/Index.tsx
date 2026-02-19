@@ -108,7 +108,7 @@ const Index = () => {
 
         {/* Hero Content */}
         <motion.div 
-          className="relative z-10 text-center px-6 max-w-4xl"
+          className="relative z-10 mx-auto w-full max-w-4xl px-4 text-center sm:px-6"
           variants={staggerContainerVariants}
           initial="hidden"
           animate="visible"
@@ -122,30 +122,31 @@ const Index = () => {
 
           <motion.h1
             variants={heroHeadingVariants}
-            className="logo-title text-3xl sm:text-5xl md:text-7xl lg:text-7xl font-light tracking-wide whitespace-nowrap text-primary-foreground mb-8"
+            className="logo-title mb-6 text-3xl font-light tracking-[0.14em] text-primary-foreground sm:text-5xl sm:tracking-wide md:mb-8 md:text-7xl lg:text-7xl"
           >
             BABEL DESIGNS
           </motion.h1>
 
           <motion.p
             variants={heroSubheadingVariants}
-            className="font-sans text-sm md:text-base uppercase tracking-[0.35em] text-primary-foreground/80 max-w-2xl mx-auto mb-12 leading-relaxed"
+            className="mx-auto mb-10 max-w-2xl font-sans text-xs uppercase leading-relaxed tracking-[0.22em] text-primary-foreground/80 sm:text-sm sm:tracking-[0.3em] md:mb-12 md:text-base md:tracking-[0.35em]"
           >
             Crafted for all, Owned by few.
           </motion.p>
 
           <motion.div
             variants={heroCTAVariants}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-6"
           >
             <motion.div
               whileHover={{ scale: 0.9 }}
               whileTap={{ scale: 0.78 }}
+              className="w-full sm:w-auto"
             >
               <Link
                 to="/collections"
                 data-cursor="Explore"
-                className="group flex items-center gap-3 font-sans text-sm tracking-widest uppercase text-primary-foreground border border-primary-foreground/40 px-8 py-4 hover:bg-primary-foreground hover:text-foreground transition-all duration-500"
+                className="group flex w-full items-center justify-center gap-3 border border-primary-foreground/40 px-6 py-3 font-sans text-xs uppercase tracking-[0.2em] text-primary-foreground transition-all duration-500 hover:bg-primary-foreground hover:text-foreground sm:w-auto sm:px-8 sm:py-4 sm:text-sm sm:tracking-widest"
               >
                 Explore Collections
                 <motion.span
@@ -163,7 +164,7 @@ const Index = () => {
               <Link
                 to="/consultancy"
                 data-cursor="Book"
-                className="font-sans text-sm tracking-widest uppercase text-primary-foreground/80 hover:text-primary-foreground transition-colors"
+                className="font-sans text-xs uppercase tracking-[0.2em] text-primary-foreground/80 transition-colors hover:text-primary-foreground sm:text-sm sm:tracking-widest"
               >
                 Book Consultancy
               </Link>
@@ -268,7 +269,7 @@ const Index = () => {
             ].map((item) => (
               <div
                 key={item.title}
-                className="lookbook-item group relative min-w-[78vw] md:min-w-[48vw] lg:min-w-[36vw] card-hover-lift"
+                className="lookbook-item group relative min-w-[86vw] md:min-w-[48vw] lg:min-w-[36vw] card-hover-lift"
               >
                 <div className="aspect-[16/10] overflow-hidden border border-border/70 bg-card/50">
                   <img
@@ -421,11 +422,11 @@ const Index = () => {
 
       <div className="fixed bottom-4 left-0 right-0 z-40 px-4 md:hidden">
         <div className="mx-auto max-w-md border border-foreground/20 bg-background/95 p-3 backdrop-blur">
-          <div className="flex items-center justify-between gap-3">
-            <p className="font-sans text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Need a custom space plan?</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="font-sans text-[10px] uppercase tracking-[0.14em] text-muted-foreground">Need a custom space plan?</p>
             <Link
               to="/consultancy"
-              className="inline-flex items-center gap-2 border border-foreground/30 px-3 py-2 text-[10px] uppercase tracking-[0.2em] hover:bg-foreground hover:text-background transition-colors"
+              className="inline-flex items-center gap-1 border border-foreground/30 px-3 py-2 text-[10px] uppercase tracking-[0.14em] hover:bg-foreground hover:text-background transition-colors"
             >
               Book Now
               <ArrowRight size={12} />

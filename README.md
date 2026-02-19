@@ -34,6 +34,7 @@ This project uses Supabase for:
 - Catalog data (`collections`, `products`)
 - Consultancy submissions (`consultancy_requests`)
 - Cart checkout requests (`orders`, `order_items`)
+- Authenticated persistent carts (`user_carts`)
 - Newsletter subscriptions (`studio_dispatch_subscribers`)
 - Payments via Razorpay (`orders`, `order_items`)
 
