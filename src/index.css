@@ -136,6 +136,15 @@
     @apply font-serif;
   }
 
+  p, li, dd, small, blockquote {
+    font-family: var(--font-sans);
+    font-weight: 300;
+  }
+
+  input, textarea, select, button, label {
+    font-family: var(--font-sans);
+  }
+
   :where(a, button, input, textarea, select, [role="button"], [tabindex]):focus-visible {
     outline: 2px solid hsl(var(--ring));
     outline-offset: 3px;
@@ -211,13 +220,14 @@
 
 /* Subheading treatment: uppercase sans text across the site */
 .font-sans.uppercase {
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 
 /* Body copy treatment: regular paragraph copy stays light */
+.font-sans:not(.uppercase),
 p.font-sans:not(.uppercase),
 li.font-sans:not(.uppercase) {
-  font-weight: 300;
+  font-weight: 300 !important;
 }
 
 @layer utilities {
