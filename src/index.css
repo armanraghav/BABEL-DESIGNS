@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -59,7 +60,7 @@
 
     /* Typography */
     --font-serif: 'Crimson Text', Georgia, serif;
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-sans: 'Lato', 'Inter', system-ui, sans-serif;
 
     /* Spacing rhythm */
     --section-padding: 8rem;
@@ -128,6 +129,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-feature-settings: "kern" 1, "liga" 1;
+    font-weight: 300;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -152,12 +154,12 @@
 
   /* Sub-headlines - Same serif, smaller */
   .subheading {
-    @apply font-serif text-xl md:text-2xl font-normal tracking-wide leading-snug;
+    @apply font-sans text-xl md:text-2xl font-medium tracking-wide leading-snug;
   }
 
   /* Body text - Neutral sans-serif */
   .body-text {
-    @apply font-sans text-base md:text-lg font-normal leading-relaxed tracking-[0.01em];
+    @apply font-sans text-base md:text-lg font-light leading-relaxed tracking-[0.01em];
   }
 
   /* Navigation - Sans-serif, spaced */
@@ -167,7 +169,7 @@
 
   /* Labels / Numbers - Sans-serif, light */
   .label-text {
-    @apply font-sans text-xs uppercase tracking-widest font-light;
+    @apply font-sans text-xs uppercase tracking-widest font-medium;
   }
 
   .editorial-heading {
@@ -195,7 +197,7 @@
   }
 
   .section-overline {
-    @apply font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground;
+    @apply font-sans text-xs tracking-[0.3em] uppercase text-muted-foreground font-medium;
   }
 
   .section-title {
@@ -203,8 +205,19 @@
   }
 
   .section-copy {
-    @apply font-sans text-muted-foreground leading-relaxed;
+    @apply font-sans text-muted-foreground leading-relaxed font-light;
   }
+}
+
+/* Subheading treatment: uppercase sans text across the site */
+.font-sans.uppercase {
+  font-weight: 500;
+}
+
+/* Body copy treatment: regular paragraph copy stays light */
+p.font-sans:not(.uppercase),
+li.font-sans:not(.uppercase) {
+  font-weight: 300;
 }
 
 @layer utilities {
