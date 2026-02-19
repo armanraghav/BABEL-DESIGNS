@@ -5,6 +5,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { CartProvider } from "@/context/CartContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -151,6 +152,76 @@ const LoadingShell = () => (
   </div>
 );
 
+const swipeRoutes = ["/", "/collections", "/case-studies", "/philosophy", "/consultancy"];
+
+const MobileSwipeNavigator = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const isMobile = () => window.matchMedia("(max-width: 767px)").matches;
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+    let swipeLocked = false;
+
+    const onTouchStart = (event: TouchEvent) => {
+      if (!isMobile() || event.touches.length !== 1) return;
+
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest(
+          "input, textarea, select, button, a, [data-swipe-lock='true'], [data-carousel='true'], .lookbook-snap",
+        )
+      ) {
+        swipeLocked = true;
+        tracking = false;
+        return;
+      }
+
+      const touch = event.touches[0];
+      startX = touch.clientX;
+      startY = touch.clientY;
+      tracking = true;
+      swipeLocked = false;
+    };
+
+    const onTouchEnd = (event: TouchEvent) => {
+      if (!tracking || swipeLocked || !isMobile() || event.changedTouches.length !== 1) return;
+      tracking = false;
+
+      const currentPath = location.pathname;
+      const routeIndex = swipeRoutes.indexOf(currentPath);
+      if (routeIndex === -1) return;
+
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - startX;
+      const deltaY = touch.clientY - startY;
+
+      const passesThreshold = Math.abs(deltaX) > 70 && Math.abs(deltaX) > Math.abs(deltaY) * 1.2;
+      if (!passesThreshold) return;
+
+      if (deltaX < 0 && routeIndex < swipeRoutes.length - 1) {
+        navigate(swipeRoutes[routeIndex + 1]);
+      } else if (deltaX > 0 && routeIndex > 0) {
+        navigate(swipeRoutes[routeIndex - 1]);
+      }
+    };
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [location.pathname, navigate]);
+
+  return null;
+};
+
 const AppContent = () => {
   const location = useLocation();
   const seo = routeSeo(location.pathname);
@@ -164,6 +235,7 @@ const AppContent = () => {
   return (
     <div className="site-grain">
       <ScrollToTop />
+      <MobileSwipeNavigator />
       <CustomCursor />
       <Navbar />
       <main>
