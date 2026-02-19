@@ -116,8 +116,10 @@ const Footer = () => {
             <motion.ul className="space-y-3" variants={staggerContainerVariants}>
               {[
                 { path: '/collections', label: 'Collections' },
+                { path: '/case-studies', label: 'Case Studies' },
                 { path: '/philosophy', label: 'Philosophy' },
                 { path: '/consultancy', label: 'Consultancy' },
+                { path: '/policies', label: 'Policies' },
               ].map((link) => (
                 <motion.li key={link.path} variants={staggerItemVariants}>
                   <Link

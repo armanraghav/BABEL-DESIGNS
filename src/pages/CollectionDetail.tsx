@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import AnimatedSection from '@/components/AnimatedSection';
 import { fetchCollectionBySlug, fetchProductsByCollectionSlug } from '@/integrations/supabase/catalog';
 import { useCart } from '@/context/CartContext';
+import { trackEvent } from '@/lib/analytics';
 
 const CollectionDetail = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -70,7 +71,7 @@ const CollectionDetail = () => {
                 <p className="font-sans text-muted-foreground leading-relaxed max-w-lg">{collection.description}</p>
               </div>
               <div className="aspect-[4/3] overflow-hidden">
-                <img src={collection.image} alt={collection.name} className="w-full h-full object-cover" />
+                <img src={collection.image} alt={collection.name} className="w-full h-full object-cover" loading="lazy" decoding="async" />
               </div>
             </div>
           </motion.div>
@@ -93,6 +94,8 @@ const CollectionDetail = () => {
                         src={product.image}
                         alt={product.name}
                         className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   </Link>
@@ -112,15 +115,16 @@ const CollectionDetail = () => {
                   <p className="font-sans text-sm text-muted-foreground leading-relaxed mb-6">{product.description}</p>
 
                   <button
-                    onClick={() =>
+                    onClick={() => {
+                      trackEvent({ event: 'add_to_cart', source: 'collection_detail', product_id: product.id });
                       addItem({
                         id: product.id,
                         name: product.name,
                         price: product.price,
                         image: product.image,
                         material: product.materials[0],
-                      })
-                    }
+                      });
+                    }}
                     className="font-sans text-xs tracking-widest uppercase text-foreground border border-foreground/30 px-6 py-3 hover:bg-foreground hover:text-background transition-all duration-300"
                   >
                     Add to Cart

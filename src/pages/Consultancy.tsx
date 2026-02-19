@@ -6,6 +6,7 @@ import { staggerContainerVariants, staggerItemVariants } from '@/lib/animations'
 import { toast } from 'sonner';
 import { createConsultancyRequest } from '@/integrations/supabase/consultancy';
 import { isSupabaseConfigured } from '@/integrations/supabase/client';
+import { trackEvent } from '@/lib/analytics';
 
 const Consultancy = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,6 +29,7 @@ const Consultancy = () => {
     setIsSubmitting(true);
     try {
       await createConsultancyRequest(formData);
+      trackEvent({ event: 'consultancy_submit_success', project_type: formData.projectType || 'unknown' });
       toast.success('Thank you for your inquiry. We will be in touch within 48 hours.');
       setFormData({
         name: '',
@@ -39,6 +41,7 @@ const Consultancy = () => {
       });
     } catch (error) {
       const message = error instanceof Error ? error.message : 'Failed to submit inquiry';
+      trackEvent({ event: 'consultancy_submit_failed' });
       toast.error(message);
     } finally {
       setIsSubmitting(false);

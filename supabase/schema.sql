@@ -47,10 +47,23 @@ create table if not exists public.orders (
   email text,
   notes text,
   status text not null default 'inquiry',
+  payment_provider text,
+  payment_status text,
+  razorpay_order_id text,
+  razorpay_payment_id text,
+  razorpay_signature text,
+  paid_at timestamptz,
   currency text not null default 'USD',
   total_amount numeric(12,2) not null check (total_amount >= 0),
   created_at timestamptz not null default now()
 );
+
+alter table public.orders add column if not exists payment_provider text;
+alter table public.orders add column if not exists payment_status text;
+alter table public.orders add column if not exists razorpay_order_id text;
+alter table public.orders add column if not exists razorpay_payment_id text;
+alter table public.orders add column if not exists razorpay_signature text;
+alter table public.orders add column if not exists paid_at timestamptz;
 
 create table if not exists public.order_items (
   id uuid primary key default gen_random_uuid(),
@@ -74,6 +87,7 @@ create index if not exists idx_collections_slug on public.collections(slug);
 create index if not exists idx_products_collection_id on public.products(collection_id);
 create index if not exists idx_products_active on public.products(active);
 create index if not exists idx_orders_created_at on public.orders(created_at desc);
+create index if not exists idx_orders_razorpay_order_id on public.orders(razorpay_order_id);
 create index if not exists idx_consultancy_created_at on public.consultancy_requests(created_at desc);
 create index if not exists idx_studio_dispatch_email on public.studio_dispatch_subscribers(email);
 

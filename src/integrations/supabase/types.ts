@@ -124,6 +124,12 @@ export interface Database {
           email: string | null;
           notes: string | null;
           status: string;
+          payment_provider: string | null;
+          payment_status: string | null;
+          razorpay_order_id: string | null;
+          razorpay_payment_id: string | null;
+          razorpay_signature: string | null;
+          paid_at: string | null;
           currency: string;
           total_amount: number;
           created_at: string;
@@ -134,6 +140,12 @@ export interface Database {
           email?: string | null;
           notes?: string | null;
           status?: string;
+          payment_provider?: string | null;
+          payment_status?: string | null;
+          razorpay_order_id?: string | null;
+          razorpay_payment_id?: string | null;
+          razorpay_signature?: string | null;
+          paid_at?: string | null;
           currency?: string;
           total_amount: number;
           created_at?: string;
@@ -144,6 +156,12 @@ export interface Database {
           email?: string | null;
           notes?: string | null;
           status?: string;
+          payment_provider?: string | null;
+          payment_status?: string | null;
+          razorpay_order_id?: string | null;
+          razorpay_payment_id?: string | null;
+          razorpay_signature?: string | null;
+          paid_at?: string | null;
           currency?: string;
           total_amount?: number;
           created_at?: string;

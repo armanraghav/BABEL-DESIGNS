@@ -17,6 +17,7 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/collections', label: 'Collections' },
+    { path: '/case-studies', label: 'Case Studies' },
     { path: '/philosophy', label: 'Philosophy' },
     { path: '/consultancy', label: 'Consultancy' },
   ];
@@ -175,7 +176,7 @@ const Navbar = () => {
           </Link>
 
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center gap-12" ref={linksRef}>
+          <div className="hidden md:flex items-center gap-8" ref={linksRef}>
             {navLinks.map((link) => (
               <Link
                 key={link.path}
