@@ -305,7 +305,7 @@ const Cart = () => {
       <section className="section-padding bg-card">
         <div className="container-editorial text-center">
           <AnimatedSection>
-            <p className="font-serif text-xl italic text-muted-foreground mb-6">
+            <p className="font-serif text-xl text-muted-foreground mb-6">
               Continue exploring our collections
             </p>
             <Link
@@ -323,3 +323,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

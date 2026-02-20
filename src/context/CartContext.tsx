@@ -3,6 +3,7 @@ import type { User } from '@supabase/supabase-js';
 import { fetchUserCartItems, saveUserCartItems } from '@/integrations/supabase/user_cart';
 import { getCurrentUser, onAuthChange } from '@/integrations/supabase/auth';
 import { isSupabaseConfigured } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 export interface CartItem {
   id: string;
@@ -159,6 +160,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   }, [items, user]);
 
   const addItem = (item: Omit<CartItem, 'quantity'>) => {
+    toast.success('Added to cart');
     setItems((prev) => {
       const existing = prev.find((i) => i.id === item.id && (i.material ?? '') === (item.material ?? ''));
       if (existing) {

@@ -54,7 +54,7 @@ const Philosophy = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="font-serif text-lg md:text-xl text-primary-foreground/90 italic"
+            className="font-serif text-lg md:text-xl text-primary-foreground/90"
           >
             Design that transcends
           </motion.p>
@@ -111,7 +111,7 @@ const Philosophy = () => {
 
             <AnimatedSection delay={0.2}>
               <div className="aspect-square bg-secondary/30 flex items-center justify-center p-12">
-                <p className="font-serif text-2xl md:text-3xl italic text-foreground leading-relaxed text-center">
+                <p className="font-serif text-2xl md:text-3xl text-foreground leading-relaxed text-center">
                   "Craft without ornament.<br />
                   Presence without pretense."
                 </p>
@@ -197,7 +197,7 @@ const Philosophy = () => {
                 A chair crafted from honest materials and true proportion needs no translation. 
                 A table that gathers families speaks in every tongue.
               </p>
-              <p className="font-serif text-xl md:text-2xl italic mt-12">
+              <p className="font-serif text-xl md:text-2xl mt-12">
                 "Design that unites all diversities."
               </p>
             </AnimatedSection>
@@ -237,3 +237,4 @@ const Philosophy = () => {
 };
 
 export default Philosophy;
+

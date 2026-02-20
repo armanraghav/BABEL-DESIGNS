@@ -25,7 +25,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const OrderSuccess = lazy(() => import("./pages/OrderSuccess"));
 const Admin = lazy(() => import("./pages/Admin"));
 const Policies = lazy(() => import("./pages/Policies"));
-const CaseStudies = lazy(() => import("./pages/CaseStudies"));
+const Blogs = lazy(() => import("./pages/CaseStudies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 const queryClient = new QueryClient();
@@ -111,10 +111,10 @@ const routeSeo = (pathname: string) => {
     };
   }
 
-  if (pathname === "/case-studies") {
+  if (pathname === "/blogs") {
     return {
-      title: "Case Studies | Babel Designs",
-      description: "See measurable outcomes from Babel Designs projects across residences and hospitality spaces.",
+      title: "Blogs | Babel Designs",
+      description: "Read stories, notes, and project insights from Babel Designs.",
       canonicalPath: pathname,
     };
   }
@@ -162,7 +162,7 @@ const LoadingShell = () => (
   </div>
 );
 
-const swipeRoutes = ["/", "/collections", "/case-studies", "/philosophy", "/consultancy"];
+const swipeRoutes = ["/", "/collections", "/philosophy", "/consultancy"];
 
 const MobileSwipeNavigator = () => {
   const location = useLocation();
@@ -264,7 +264,8 @@ const AppContent = () => {
                 <Route path="/order/success/:orderId" element={<OrderSuccess />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/policies" element={<Policies />} />
-                <Route path="/case-studies" element={<CaseStudies />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/case-studies" element={<Blogs />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>

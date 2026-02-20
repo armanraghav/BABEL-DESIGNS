@@ -230,6 +230,10 @@ li.font-sans:not(.uppercase) {
   font-weight: 300 !important;
 }
 
+.italic {
+  font-style: normal !important;
+}
+
 @layer utilities {
   .text-balance {
     overflow-wrap: anywhere;

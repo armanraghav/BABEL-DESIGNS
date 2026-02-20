@@ -153,7 +153,7 @@ const ProductDetail = () => {
 
               <div className="border-t border-border pt-6 mb-8">
                 <h3 className="font-sans text-xs tracking-widest uppercase text-muted-foreground mb-3">Philosophy</h3>
-                <p className="font-serif text-foreground italic leading-relaxed">"{product.philosophy}"</p>
+                <p className="font-serif text-foreground leading-relaxed">"{product.philosophy}"</p>
               </div>
 
               <button
@@ -221,7 +221,7 @@ const ProductDetail = () => {
       <AnimatedSection>
         <section className="section-padding bg-card mt-20">
           <div className="container-editorial text-center max-w-3xl">
-            <p className="font-serif text-2xl md:text-3xl italic text-foreground leading-relaxed">
+            <p className="font-serif text-2xl md:text-3xl text-foreground leading-relaxed">
               Each piece is crafted with intention, designed to age gracefully and
               become more beautiful with time.
             </p>
@@ -233,3 +233,4 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
+

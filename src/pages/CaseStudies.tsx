@@ -26,8 +26,8 @@ const CaseStudies = () => {
     <div className="min-h-screen pt-32 md:pt-40">
       <section className="section-padding pt-0">
         <div className="container-editorial">
-          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">Case Studies</p>
-          <h1 className="mb-8 font-serif text-4xl md:text-5xl font-light">Measured impact in real spaces</h1>
+          <p className="mb-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">Blogs</p>
+          <h1 className="mb-8 font-serif text-4xl md:text-5xl font-light">Stories and insights</h1>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {studies.map((study) => (
