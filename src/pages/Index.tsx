@@ -13,7 +13,7 @@ import {
   heroCTAVariants,
   imageZoomInVariants,
 } from '@/lib/animations';
-import heroBg from '@/assets/BENCH VIOLA.png';
+import heroBg from '@/assets/homepagebg.jpeg';
 import monolithImg from '@/assets/monolith-collection.jpg';
 import stillnessImg from '@/assets/stillness-collection.jpg';
 import originImg from '@/assets/origin-collection.jpg';
@@ -74,7 +74,14 @@ const Index = () => {
     <div className="min-h-screen">
       <section className="relative h-screen flex items-center justify-center overflow-hidden section-transition">
         <motion.div variants={imageZoomInVariants} initial="hidden" animate="visible" className="absolute inset-0" style={{ y: heroOffset }}>
-          <img src={heroBg} alt="Babel Designs architectural interior" className="w-full h-full object-cover" />
+          <img
+            src={heroBg}
+            alt="Babel Designs architectural interior"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
           <div className="absolute inset-0 bg-foreground/65" />
         </motion.div>
 
