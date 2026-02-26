@@ -84,14 +84,16 @@ const LaunchCountdown = () => {
           <div className="mb-10 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <p className="mb-4 font-sans text-xs uppercase tracking-[0.32em] text-muted-foreground">Private Preview Lock</p>
-              <h1 className="logo-title text-4xl leading-none text-foreground sm:text-5xl md:text-7xl">BABEL DESIGNS</h1>
+              <h1 className="font-sans text-4xl font-medium uppercase leading-none tracking-[0.12em] text-foreground sm:text-5xl md:text-7xl">
+                BABEL DESIGNS
+              </h1>
               <p className="mt-4 max-w-2xl font-sans text-sm uppercase tracking-[0.22em] text-muted-foreground sm:text-base sm:tracking-[0.3em]">
                 Website relaunch sequence in progress
               </p>
             </div>
             <div className="border border-foreground/20 bg-background/60 px-4 py-3">
               <p className="font-sans text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Target Launch</p>
-              <p className="mt-1 font-serif text-xl text-foreground sm:text-2xl">January 1, 2027</p>
+              <p className="mt-1 font-sans text-xl uppercase tracking-[0.12em] text-foreground sm:text-2xl">January 1, 2027</p>
               <p className="font-mono text-[11px] text-muted-foreground">00:00 UTC</p>
             </div>
           </div>
@@ -116,7 +118,7 @@ const LaunchCountdown = () => {
             </div>
             <div className="text-center md:text-left">
               <p className="font-sans text-xs uppercase tracking-[0.22em] text-muted-foreground">Progress Marker</p>
-              <p className="mt-2 font-serif text-2xl font-light text-foreground sm:text-3xl">The collection experience is temporarily hidden.</p>
+              <p className="mt-2 font-sans text-2xl font-light text-foreground sm:text-3xl">The collection experience is temporarily hidden.</p>
               <p className="mt-2 max-w-2xl font-sans text-sm leading-relaxed text-muted-foreground">
                 We are refining materials, motion, and narrative. Until launch, every route is intentionally redirected to this countdown page.
               </p>
