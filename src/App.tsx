@@ -27,6 +27,9 @@ const Admin = lazy(() => import("./pages/Admin"));
 const Policies = lazy(() => import("./pages/Policies"));
 const Blogs = lazy(() => import("./pages/CaseStudies"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const LaunchCountdown = lazy(() => import("./pages/LaunchCountdown"));
+
+const isLaunchGateEnabled = import.meta.env.VITE_LAUNCH_GATE_ENABLED !== "false";
 
 const queryClient = new QueryClient();
 
@@ -234,13 +237,30 @@ const MobileSwipeNavigator = () => {
 
 const AppContent = () => {
   const location = useLocation();
-  const seo = routeSeo(location.pathname);
+  const seo = isLaunchGateEnabled
+    ? {
+        title: "Babel Designs | Launch Countdown",
+        description: "Babel Designs is preparing a new launch experience. Countdown to January 1, 2027.",
+        canonicalPath: "/",
+        noIndex: true,
+      }
+    : routeSeo(location.pathname);
 
   useSeo(seo);
 
   useEffect(() => {
     trackEvent({ event: "page_view", path: location.pathname });
   }, [location.pathname]);
+
+  if (isLaunchGateEnabled) {
+    return (
+      <div className="site-grain">
+        <Suspense fallback={<LoadingShell />}>
+          <LaunchCountdown />
+        </Suspense>
+      </div>
+    );
+  }
 
   return (
     <div className="site-grain">
