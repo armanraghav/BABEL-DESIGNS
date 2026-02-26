@@ -13,7 +13,7 @@ import {
   heroCTAVariants,
   imageZoomInVariants,
 } from '@/lib/animations';
-import heroBg from '@/assets/homepagebg.jpeg';
+import heroBg from '@/assets/bench-viola-hero.webp';
 import monolithImg from '@/assets/monolith-collection.jpg';
 import stillnessImg from '@/assets/stillness-collection.jpg';
 import originImg from '@/assets/origin-collection.jpg';
