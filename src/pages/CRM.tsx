@@ -171,6 +171,7 @@ const CRM = () => {
                     </p>
                   </div>
                   <select
+                    title="Change lead status"
                     className="border border-border bg-background px-2 py-1"
                     defaultValue={lead.status}
                     onChange={(event) => {

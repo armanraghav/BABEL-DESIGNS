@@ -90,11 +90,11 @@ const Collections = () => {
 
           <div className="mb-8 grid grid-cols-1 gap-4 border border-border/60 bg-card/50 p-5 md:grid-cols-4">
             <input value={searchTerm} onChange={(event) => setSearchTerm(event.target.value)} placeholder="Search collections or products" className="md:col-span-2 border border-border bg-background px-3 py-2 text-sm" />
-            <select value={materialFilter} onChange={(event) => setMaterialFilter(event.target.value)} className="border border-border bg-background px-3 py-2 text-sm">
+            <select value={materialFilter} onChange={(event) => setMaterialFilter(event.target.value)} title="Filter by material" className="border border-border bg-background px-3 py-2 text-sm">
               <option value="all">All materials</option>
               {materials.map((material) => (<option key={material} value={material}>{material}</option>))}
             </select>
-            <select value={priceBand} onChange={(event) => setPriceBand(event.target.value as 'all' | '0-3000' | '3001-7000' | '7001+')} className="border border-border bg-background px-3 py-2 text-sm">
+            <select value={priceBand} onChange={(event) => setPriceBand(event.target.value as 'all' | '0-3000' | '3001-7000' | '7001+')} title="Filter by price" className="border border-border bg-background px-3 py-2 text-sm">
               <option value="all">All prices</option>
               <option value="0-3000">Up to $3,000</option>
               <option value="3001-7000">$3,001 - $7,000</option>
