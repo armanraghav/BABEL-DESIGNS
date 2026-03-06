@@ -142,7 +142,7 @@ const Account = () => {
                 >
                   <Camera size={16} />
                 </label>
-                <input id="account-avatar-upload" type="file" accept="image/*" className="hidden" onChange={onAvatarChange} />
+                <input id="account-avatar-upload" type="file" accept="image/*" className="hidden" onChange={onAvatarChange} aria-label="Change avatar" />
               </div>
 
               <p className="text-center font-serif text-2xl">{user.name || "Babel Collector"}</p>
@@ -171,7 +171,7 @@ const Account = () => {
                 </div>
                 <div>
                   <label className="mb-2 block font-sans text-xs uppercase tracking-[0.2em] text-muted-foreground">Email</label>
-                  <input value={user.email ?? ""} disabled className="w-full border border-border bg-muted/50 px-4 py-3 text-sm" />
+                  <input value={user.email ?? ""} disabled title="Email address" className="w-full border border-border bg-muted/50 px-4 py-3 text-sm" />
                 </div>
               </div>
 
