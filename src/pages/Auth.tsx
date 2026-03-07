@@ -107,13 +107,6 @@ const Auth = () => {
                     {isSubmitting === "google" ? "Connecting to Google..." : "Continue with Google"}
                   </button>
                   <button
-                    onClick={() => handleOAuth("github")}
-                    disabled={isSubmitting !== null}
-                    className="group w-full border border-foreground/35 px-6 py-4 text-left font-sans text-xs uppercase tracking-[0.26em] transition-colors hover:bg-foreground hover:text-background disabled:opacity-60"
-                  >
-                    {isSubmitting === "github" ? "Connecting to GitHub..." : "Continue with GitHub"}
-                  </button>
-                  <button
                     onClick={handleContinueAsGuest}
                     className="w-full border border-foreground/20 px-6 py-4 text-left font-sans text-xs uppercase tracking-[0.26em] text-muted-foreground transition-colors hover:border-foreground hover:text-foreground"
                   >

@@ -1,7 +1,7 @@
 import type { User } from "@supabase/supabase-js";
 import { getSupabaseClient, isSupabaseConfigured } from "./client";
 
-export type OAuthProvider = "google" | "github";
+export type OAuthProvider = "google";
 const isSessionMissingError = (error: { message?: string } | null) =>
   error?.message?.toLowerCase().includes("auth session missing") === true;
 
