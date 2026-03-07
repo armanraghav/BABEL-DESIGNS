@@ -101,6 +101,17 @@ const Auth = () => {
                   </p>
                 </div>
               )}
+              <div className="mb-6 border border-border/60 bg-background p-4 text-xs text-muted-foreground">
+                <p className="font-sans text-sm text-foreground">Auth diagnostics</p>
+                <p className="mt-2 font-mono">Origin: {typeof window !== "undefined" ? window.location.origin : "n/a"}</p>
+                <p className="font-mono">Supabase URL ref: {supabaseDiagnostics.urlRef ?? "unknown"}</p>
+                <p className="font-mono">JWT key ref: {supabaseDiagnostics.keyRef ?? "n/a"}</p>
+                <p className="font-mono">Key format: {supabaseDiagnostics.keyLooksLikeJwt ? "jwt" : "publishable"}</p>
+                {supabaseDiagnostics.keyUrlRefMismatch && (
+                  <p className="mt-1 font-sans text-amber-700">Mismatch detected: URL and key point to different Supabase projects.</p>
+                )}
+                {authDebugMessage && <p className="mt-1 font-sans text-amber-700">Last auth error: {authDebugMessage}</p>}
+              </div>
               {authDebugMessage && (
                 <div className="mb-6 border border-amber-500/40 bg-background p-4 text-xs text-amber-700">
                   <p className="font-sans text-sm">Auth debug: {authDebugMessage}</p>
