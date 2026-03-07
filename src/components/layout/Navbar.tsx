@@ -4,8 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import type { User } from '@supabase/supabase-js';
-import { getCurrentUser, onAuthChange } from '@/integrations/supabase/auth';
-import { isSupabaseConfigured } from '@/integrations/supabase/client';
+import { isSupabaseConfigured, getSupabaseClient } from '@/integrations/supabase/client';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const Navbar = () => {
@@ -40,20 +39,25 @@ const Navbar = () => {
   useEffect(() => {
     if (!isSupabaseConfigured) return;
 
+    const client = getSupabaseClient();
     let mounted = true;
-    getCurrentUser()
-      .then((nextUser) => {
-        if (mounted) setUser(nextUser);
-      })
-      .catch(() => undefined);
+    const syncSessionUser = async () => {
+      const { data } = await client.auth.getSession();
+      if (mounted) setUser(data.session?.user ?? null);
+    };
 
-    const subscription = onAuthChange((nextUser) => {
-      if (mounted) setUser(nextUser);
+    void syncSessionUser();
+
+    const { data } = client.auth.onAuthStateChange((_event, session) => {
+      if (mounted) setUser(session?.user ?? null);
     });
+
+    window.addEventListener('focus', syncSessionUser);
 
     return () => {
       mounted = false;
-      subscription.unsubscribe();
+      data.subscription.unsubscribe();
+      window.removeEventListener('focus', syncSessionUser);
     };
   }, []);
 

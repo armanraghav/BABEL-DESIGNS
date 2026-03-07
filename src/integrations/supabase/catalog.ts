@@ -92,7 +92,8 @@ export const fetchCollections = async (): Promise<Collection[]> => {
 
   if (error) {
     if (shouldFallbackRead(error)) return fallbackCollectionsWithDemoImages;
-    throw error;
+    console.warn("[catalog] Falling back to local collections due to Supabase read error:", error);
+    return fallbackCollectionsWithDemoImages;
   }
   return (data ?? []).map(toCollection);
 };
@@ -108,7 +109,8 @@ export const fetchCollectionBySlug = async (slug: string): Promise<Collection | 
 
   if (error) {
     if (shouldFallbackRead(error)) return getFallbackCollectionBySlug(slug) ?? null;
-    throw error;
+    console.warn("[catalog] Falling back to local collection due to Supabase read error:", error);
+    return getFallbackCollectionBySlug(slug) ?? null;
   }
   if (!data) return null;
   return toCollection(data);
@@ -128,7 +130,8 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
   if (error) {
     if (shouldFallbackRead(error)) return fallbackProducts;
-    throw error;
+    console.warn("[catalog] Falling back to local products due to Supabase read error:", error);
+    return fallbackProducts;
   }
   return ((data ?? []) as ProductQueryRow[]).map(toProduct);
 };
@@ -148,7 +151,8 @@ export const fetchProductsByCollectionSlug = async (slug: string): Promise<Produ
 
   if (error) {
     if (shouldFallbackRead(error)) return getFallbackProductsByCollection(slug);
-    throw error;
+    console.warn("[catalog] Falling back to local collection products due to Supabase read error:", error);
+    return getFallbackProductsByCollection(slug);
   }
   return ((data ?? []) as ProductQueryRow[]).map(toProduct);
 };
@@ -167,7 +171,8 @@ export const fetchProductById = async (id: string): Promise<Product | null> => {
 
   if (error) {
     if (shouldFallbackRead(error)) return getFallbackProductById(id) ?? null;
-    throw error;
+    console.warn("[catalog] Falling back to local product due to Supabase read error:", error);
+    return getFallbackProductById(id) ?? null;
   }
   if (!data) return null;
   return toProduct(data as ProductQueryRow);

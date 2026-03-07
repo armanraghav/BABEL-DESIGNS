@@ -32,7 +32,17 @@ const LaunchCountdown = lazy(() => import("./pages/LaunchCountdown"));
 
 const isLaunchGateEnabled = import.meta.env.VITE_LAUNCH_GATE_ENABLED === "true";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 30,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+      retry: 1,
+    },
+  },
+});
 
 const routeSeo = (pathname: string) => {
   if (pathname === "/") {
