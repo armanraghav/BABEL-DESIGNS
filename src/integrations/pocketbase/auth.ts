@@ -45,8 +45,9 @@ export const getOAuthProviders = async (): Promise<OAuthProvider[]> => {
 
   try {
     const methods = await getPocketBaseClient().collection("users").listAuthMethods();
-    const available = methods.oauth2.providers
-      .map((provider) => provider.name)
+    const oauthProviders = Array.isArray(methods?.oauth2?.providers) ? methods.oauth2.providers : [];
+    const available = oauthProviders
+      .map((provider) => provider?.name)
       .filter((name): name is OAuthProvider => name === "google" || name === "github");
     return available;
   } catch {
