@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import {
   isPocketBaseConfigured,
   isPocketBaseLocalhostInHostedRuntime,
+  isUsingPocketBaseHostedFallback,
   resolvedPocketBaseUrl,
 } from "@/integrations/pocketbase/client";
 import {
@@ -23,10 +24,11 @@ const Auth = () => {
   const [isSubmitting, setIsSubmitting] = useState<OAuthProvider | null>(null);
   const [providers, setProviders] = useState<OAuthProvider[]>([]);
   const [providersLoadFailed, setProvidersLoadFailed] = useState(false);
+  const isOAuthBlockedByPocketBaseUrl = !isPocketBaseConfigured || isPocketBaseLocalhostInHostedRuntime;
   const displayedProviders: OAuthProvider[] = providers.length ? providers : ["google", "github"];
 
   useEffect(() => {
-    if (!isPocketBaseConfigured) {
+    if (!isPocketBaseConfigured || isPocketBaseLocalhostInHostedRuntime) {
       setIsLoading(false);
       return;
     }
@@ -125,9 +127,17 @@ const Auth = () => {
                 <div className="mb-6 border border-destructive/40 bg-background p-4">
                   <p className="font-sans text-sm text-destructive">
                     PocketBase URL is set to localhost in a hosted deployment. Set `VITE_POCKETBASE_URL` to your
-                    public PocketBase domain in Vercel env vars.
+                    public PocketBase domain in Vercel env vars (or set `VITE_POCKETBASE_PUBLIC_URL` as hosted-only fallback).
                   </p>
                   <p className="mt-2 font-mono text-xs text-muted-foreground">Current value: {resolvedPocketBaseUrl}</p>
+                </div>
+              )}
+              {isUsingPocketBaseHostedFallback && (
+                <div className="mb-6 border border-emerald-600/40 bg-background p-4">
+                  <p className="font-sans text-sm text-emerald-700">
+                    Hosted runtime detected. Using `VITE_POCKETBASE_PUBLIC_URL` because `VITE_POCKETBASE_URL` points to localhost.
+                  </p>
+                  <p className="mt-2 font-mono text-xs text-muted-foreground">Resolved URL: {resolvedPocketBaseUrl}</p>
                 </div>
               )}
 
@@ -138,7 +148,7 @@ const Auth = () => {
                 </div>
               )}
 
-              {isPocketBaseConfigured && !isLoading && !user && (
+              {!isOAuthBlockedByPocketBaseUrl && !isLoading && !user && (
                 <div className="space-y-4">
                   {displayedProviders.includes("google") && (
                     <button
@@ -168,7 +178,7 @@ const Auth = () => {
                       No OAuth providers enabled yet. Enable Google or GitHub in PocketBase `users` auth settings.
                     </p>
                   )}
-                  {isLocalPocketBaseUrl() && (
+                  {isLocalPocketBaseUrl() && !isPocketBaseLocalhostInHostedRuntime && (
                     <p className="border border-amber-500/40 bg-background p-4 text-xs text-amber-700">
                       Mobile note: `127.0.0.1` points to the phone itself. Use your computer&apos;s LAN IP in `VITE_POCKETBASE_URL` for mobile OAuth.
                     </p>

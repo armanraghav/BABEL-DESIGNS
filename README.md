@@ -42,6 +42,7 @@ This project now uses PocketBase for:
 Copy `.env.example` to `.env` and set:
 
 - `VITE_POCKETBASE_URL`
+- `VITE_POCKETBASE_PUBLIC_URL` (optional fallback used only on hosted domains when `VITE_POCKETBASE_URL` is localhost)
 
 ### 2. PocketBase collections
 
@@ -76,6 +77,7 @@ For `/auth` OAuth sign-in:
 For production auth/account to work:
 
 1. Set `VITE_POCKETBASE_URL` to a public PocketBase URL (never `127.0.0.1` or `localhost`).
+   - If you want localhost in local dev, also set `VITE_POCKETBASE_PUBLIC_URL` in Vercel to your public PocketBase URL.
 2. Set `VITE_LAUNCH_GATE_ENABLED=false` unless you intentionally want the countdown page only.
 3. Confirm Vercel production branch is `main`.
 4. In PocketBase OAuth provider settings, use callback:
